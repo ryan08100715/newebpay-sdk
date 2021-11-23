@@ -1,33 +1,23 @@
 # NewebpaySDK
 
-## Getting started
+## Dependencies
 
-```typescript
-import { NewebpaySDK } from "newebpay-sdk";
+- axios
+- crypto-js
 
-const merchantID = "";
-const hashKey = "";
-const hashIV = "";
-const env = "test"; // test or prod
+## How to use
 
-const newebpaySDK = new NewebpaySDK(merchantID, hashKey, hashIV, env);
+提供兩種使用方法
 
-const mpgOptions = {
-  MerchantOrderNo: "202108010010",
-  Amt: 100,
-  ItemDesc: "絨毛娃娃",
-  Email: "",
-  LoginType: 0,
-};
+1. 直接根據串接文件使用對應的 SDK
 
-const mpgParams = newebpaySDK.mpg(mpgOptions); // 產生MPG付款參數
+   - MPGSDK
+   - CreditCardReversalSDK
+   - CreditCardFundRefundSDK
+   - QueryOrderSDK
 
-// mpgParams
-// {
-//   requestUrl: "https://.....",
-//   merchantID: "merchantID",
-//   tradeInfo: "tradeInfo",
-//   tradeSha: "tradeSha",
-//   version: "1.6",
-// };
-```
+2. 使用封裝好的 Merchant Class
+
+## Examples
+
+請參考 ./examples 資料夾裡的文件

@@ -1,6 +1,7 @@
 interface OptionalParams {
   /**
-   * 語系，設定 MPG 頁面顯示的文字語系。
+   * 語系，設定 MPG 頁面顯示的文字語系
+   *
    * - 英文版參數為 en
    * - 繁體中文版參數為 zh-tw
    * - 日文版參數為 jp
@@ -10,6 +11,7 @@ interface OptionalParams {
   LangType: string;
   /**
    * 交易限制秒數
+   *
    * - 限制交易的秒數，當秒數倒數至 0 時，交易當做失敗。
    * - 僅可接受數字格式。
    * - 秒數下限為 60 秒，當秒數介於 1~59 秒時，會以 60 秒計算。
@@ -19,6 +21,7 @@ interface OptionalParams {
   TradeLimit: number;
   /**
    * 繳費有效期限(適用於非即時交易)
+   *
    * - 格式為 date('Ymd') ，例：20140620。
    * - 此參數若為空值，系統預設為 7 天。自取號時間起算至第 7 天 23:59:59。
    * - 例：2014-06-23 14:35:51 完成取號，則繳費有效期限為 2014-06-29 23:59:59。
@@ -27,6 +30,7 @@ interface OptionalParams {
   ExpireDate: string;
   /**
    * 支付完成返回商店網址
+   *
    * - 交易完成後，以 Form Post 方式導回商店頁面。
    * - 若支付工具為玉山 Wallet、台灣 Pay 或本欄位為空值，於交易完成後，消費者將停留在藍新金流付款或取號結果頁面。
    * - 只接受 80 與 443 Port。
@@ -34,24 +38,28 @@ interface OptionalParams {
   ReturnURL: string;
   /**
    * 支付通知網址
+   *
    * - 以幕後方式回傳給商店相關支付結果資料。
    * - 只接受 80 與 443 Port。
    */
   NotifyURL: string;
   /**
    * 商店取號網址
+   *
    * - 系統取號後以 form post 方式將結果導回商店指定的網址。
    * - 此參數若為空值，則會顯示取號結果在藍新金流頁面。
    */
   CustomerURL: string;
   /**
    * 返回商店網址
+   *
    * - 在藍新支付頁或藍新交易結果頁面上所呈現之返回鈕，我方將依據此參數之設定值進行設定，引導商店消費者依以此參數 網址返回商店指定的頁面。
    * - 此參數若為空值時，則無返回鈕。
    */
   ClientBackURL: string;
   /**
    * 付款人電子信箱是否開放修改
+   *
    * - 設定於 MPG 頁面，付款人電子信箱欄位是否開放讓付款人修改。
    * - 1 = 可修改
    * - 0 = 不可修改
@@ -59,6 +67,7 @@ interface OptionalParams {
   EmailModify: number;
   /**
    * 商店備註
+   *
    * - 最大限制長度為 300 字。
    * - 若有提供此參數，將會於 MPG 頁面呈現商店備註內容。
    */
@@ -106,6 +115,7 @@ interface OptionalParams {
   ImageUrl: string;
   /**
    * 信用卡分期付款啟用
+   *
    * - 此欄位值 = 1 時，即代表開啟所有分期期別，且不可帶入其他期別參數。
    * - 此欄位值為下列數值時，即代表開啟該分期期別。
    *   - 3=分 3 期功能
@@ -216,6 +226,7 @@ interface OptionalParams {
   CVSCOM: number;
   /**
    * 付款人綁定資料
+   *
    * - 可對應付款人之資料，用於綁定付款人與信用卡卡號時使用，例：會員編號、Email。
    * - 限英、數字，「.」、「_」、「@」、「-」格式。
    */
@@ -236,6 +247,7 @@ interface OptionalParams {
 interface RequiredParams {
   /**
    * 商店訂單編號
+   *
    * - 商店自訂訂單編號，限英、數字、_格式。
    * - 最大長度限制為 30 字元。
    * - 同一商店中此編號不可重覆。
@@ -245,12 +257,14 @@ interface RequiredParams {
   MerchantOrderNo: string;
   /**
    * 訂單金額
+   *
    * - 純數字不含符號，例：1000。
    * - 幣別：新台幣。
    */
   Amt: number;
   /**
    * 商品資訊
+   *
    * - 最大限制長度為 50 字元。
    * - 編碼為 Utf-8 格式。
    * - 請勿使用斷行符號、單引號等特殊符號，避免無法顯示完整付款頁面。
@@ -259,23 +273,40 @@ interface RequiredParams {
   ItemDesc: string;
   /**
    * 付款人電子信箱
+   *
    * - 於交易完成或付款完成時，通知付款人使用。
    */
   Email: string;
   /**
    * 藍新金流會員
+   *
    * - 1 = 須要登入藍新金流會員
    * - 0 = 不須登入藍新金流會員
    */
   LoginType: number;
 }
 
-export type MPGOptions = RequiredParams & Partial<OptionalParams>;
+export type MPGInfo = RequiredParams & Partial<OptionalParams>;
 
-export interface MPGParams {
+export interface MPGRequestInfo {
+  /**
+   * 交易請求網址
+   */
   requestUrl: string;
+  /**
+   * 藍新金流商店代號
+   */
   merchantID: string;
+  /**
+   * 交易資料 AES 加密
+   */
   tradeInfo: string;
+  /**
+   * 交易資料 SHA256 加密
+   */
   tradeSha: string;
+  /**
+   * 串接程式版本
+   */
   version: string;
 }
